@@ -5,9 +5,12 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (reduce) document.body.classList.add('reduce-motion');
 
-// Pause hero video on small screens (perf), rely on ambiance/poster
+// Attempt to play hero video (needed on iOS Safari which may block autoplay despite attributes)
 const hv = document.querySelector('.hero-video');
-if (hv && window.innerWidth < 768) { hv.removeAttribute('autoplay'); hv.pause && hv.pause(); }
+if (hv) {
+  const playPromise = hv.play();
+  if (playPromise !== undefined) playPromise.catch(() => {});
+}
 
 // --- Nav background on scroll ---
 const nav = document.getElementById('nav');
