@@ -5,11 +5,22 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (reduce) document.body.classList.add('reduce-motion');
 
-// Attempt to play hero video (needed on iOS Safari which may block autoplay despite attributes)
+// Attempt to play hero video (iOS Safari blocks autoplay in Low Power Mode / data saver)
 const hv = document.querySelector('.hero-video');
 if (hv) {
   const playPromise = hv.play();
-  if (playPromise !== undefined) playPromise.catch(() => {});
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      // Autoplay blocked — hide video so aurora fallback shows fully
+      hv.style.opacity = '0';
+    });
+  }
+  // Also handle iOS pausing after first frame
+  hv.addEventListener('pause', () => {
+    if (hv.currentTime < 1) {
+      hv.style.opacity = '0';
+    }
+  });
 }
 
 // --- Nav background on scroll ---
