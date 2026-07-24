@@ -40,6 +40,11 @@
 
 <body class="text-neutral-400 selection:bg-ember-500/30 selection:text-white antialiased">
 
+<!-- ======================= PRELOADER ======================= -->
+<div id="preloader" class="fixed inset-0 z-[9999] bg-[#08090b] flex flex-col items-center justify-center transition-opacity duration-500">
+  <img src="https://knakasakiloja.com.br/images/img_000.webp" alt="KNAKASAKI" class="h-10 md:h-12 w-auto animate-pulse"/>
+</div>
+
 <!-- ======================= NAV ======================= -->
 <nav id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-white border-b border-neutral-200">
   <div class="max-w-7xl mx-auto px-6 h-16 md:h-20 flex items-center justify-between">
@@ -124,7 +129,7 @@
 </header>
 
 <!-- ======================= NÚMEROS ======================= -->
-<section id="numeros" class="relative z-10 -mt-2">
+<section id="numeros" class="relative z-10 -mt-2 mb-12">
   <div class="max-w-6xl mx-auto px-6">
     <div class="rounded-2xl border border-white/10 bg-neutral-950/70 backdrop-blur-md grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-white/5 overflow-hidden shadow-2xl shadow-black/40">
       <div class="p-6 md:p-8 text-center animate-on-scroll numeros-highlight">
@@ -148,7 +153,8 @@
 </section>
 
 <!-- ======================= SOBRE ======================= -->
-<section id="sobre" class="py-28 md:py-36 max-w-7xl mx-auto px-6 bg-neutral-800 border-y border-white/5">
+<section id="sobre" class="py-28 md:py-36 bg-neutral-800 border-y border-white/5">
+  <div class="max-w-7xl mx-auto px-6">
   <div class="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
     <div class="animate-on-scroll">
       <p class="text-xs font-semibold uppercase tracking-widest text-ember-400 mb-4">Nossa história</p>
@@ -176,6 +182,7 @@
       </div>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- ======================= POR QUE (desconstrução) ======================= -->
@@ -199,15 +206,16 @@
     </div>
 
     <div class="mt-10 rounded-2xl overflow-hidden relative animate-on-scroll">
-      <div class="absolute inset-0 bg-gradient-to-r from-ember-600 to-ember-500"></div>
-      <div class="absolute inset-0 opacity-20" style="background-image:radial-gradient(circle at 80% 50%,#fff,transparent 45%);"></div>
-      <p class="relative px-8 py-10 text-center font-display text-2xl md:text-3xl font-bold text-white">Da China direto para o seu negócio, sem intermediário e sem surpresa.</p>
+      <div class="absolute inset-0 bg-gradient-to-r from-ember-500/20 to-ember-600/10"></div>
+      <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(circle at 80% 50%,#fff,transparent 45%);"></div>
+      <p class="relative px-8 py-10 text-center font-display text-2xl md:text-3xl font-bold text-neutral-300">Da China direto para o seu negócio, sem intermediário e sem surpresa.</p>
     </div>
   </div>
 </section>
 
 <!-- ======================= COMO FUNCIONA ======================= -->
-<section id="como-funciona" class="py-28 md:py-36 max-w-7xl mx-auto px-6 bg-neutral-800 border-y border-white/5">
+<section id="como-funciona" class="py-28 md:py-36 bg-neutral-800 border-y border-white/5">
+  <div class="max-w-7xl mx-auto px-6">
   <div class="max-w-2xl mb-16 animate-on-scroll">
     <p class="text-xs font-semibold uppercase tracking-widest text-ember-400 mb-4">Nosso serviço principal</p>
     <h2 class="font-display text-4xl md:text-6xl text-white tracking-tight mb-4 leading-none"><span class="text-accent">Importação direta</span>, do fornecedor ao seu estoque.</h2>
@@ -255,6 +263,7 @@
         Quero importar com a KNAKASAKI <i class="w-4 h-4" data-lucide="arrow-right"></i>
       </a>
     </div>
+  </div>
   </div>
 </section>
 
@@ -305,7 +314,8 @@
 </section>
 
 <!-- ======================= SEGMENTOS ======================= -->
-<section id="segmentos" class="py-28 md:py-36 max-w-7xl mx-auto px-6">
+<section id="segmentos" class="py-28 md:py-36 bg-neutral-800 border-y border-white/5">
+  <div class="max-w-7xl mx-auto px-6">
   <div class="max-w-2xl mb-16 animate-on-scroll">
     <p class="text-xs font-semibold uppercase tracking-widest text-ember-400 mb-4">Amplitude que vira vantagem</p>
     <h2 class="font-display text-4xl md:text-6xl text-white tracking-tight mb-4 leading-none">Importamos praticamente <span class="text-accent">qualquer categoria</span>.</h2>
@@ -349,6 +359,7 @@
         <p class="text-xs text-neutral-300 mt-1">motor de bike, bicicletas e esteiras ergométricas</p>
       </div>
     </div>
+  </div>
   </div>
 </section>
 
@@ -460,7 +471,7 @@
           <input type="email" placeholder="E-mail" class="w-full rounded-lg bg-neutral-900 border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-ember-500 transition-colors"/>
         </div>
         <textarea rows="3" placeholder="O que você quer importar?" class="w-full rounded-lg bg-neutral-900 border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-ember-500 transition-colors resize-none"></textarea>
-        <button class="w-full rounded-lg bg-ember-500 hover:bg-ember-600 text-white font-semibold text-sm py-3.5 transition-all active:scale-[.98] flex items-center justify-center gap-2">
+        <button class="w-full rounded-full bg-ember-500 hover:bg-ember-600 text-white font-semibold text-sm py-3.5 transition-all active:scale-[.98] flex items-center justify-center gap-2">
           Falar com um especialista <i class="w-4 h-4" data-lucide="send"></i>
         </button>
         <p class="text-center text-xs text-neutral-600">Ou <a href="#" class="text-ember-400 hover:underline">chame no WhatsApp</a></p>
@@ -514,5 +525,14 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
+<script>
+  window.addEventListener('load', function() {
+    var preloader = document.getElementById('preloader');
+    if (preloader) {
+      preloader.style.opacity = '0';
+      setTimeout(function() { preloader.remove(); }, 500);
+    }
+  });
+</script>
 </body>
 </html>
