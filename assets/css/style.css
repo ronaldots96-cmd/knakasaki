@@ -125,7 +125,25 @@ video.hero-video{ position:absolute; inset:0; width:100%; height:100%; object-fi
 
 .reduce-motion *{ animation:none !important; }
 
-.step-line{ background:linear-gradient(to right,transparent,rgba(255,255,255,.18),transparent); }
+.step-line{ background:linear-gradient(to right,transparent,var(--accent),transparent); }
+
+/* ---------- Step layout (Como funciona) ---------- */
+/* Desktop: number boxes overlap the connecting line */
+@media (min-width:1024px){
+  .step-list .step-item{ position:relative; padding-top:5.25rem; }
+  .step-list .step-num{ position:absolute; top:0; left:0; width:4rem; height:4rem; margin-bottom:0; }
+}
+/* Mobile: numbers left + vertical connecting line */
+@media (max-width:1023px){
+  .step-list .step-num{ flex-shrink:0; width:3rem; height:3rem; border-radius:0.75rem;
+    background:rgb(17,17,19); border:1px solid var(--accent);
+    display:flex; align-items:center; justify-content:center; }
+  .step-list .step-item{ display:flex; gap:1rem; padding:1.25rem 0; }
+  .step-list .step-content{ flex:1; }
+  .step-list{ position:relative; padding-left:3.5rem; }
+  .step-list::before{ content:""; position:absolute; left:calc(3.5rem + 1.5rem); top:2.75rem; bottom:2.75rem;
+    width:1px; background:var(--accent); }
+}
 
 /* Seção 2 - Números: destaque mobile */
 @media (max-width:767px){
@@ -133,6 +151,6 @@ video.hero-video{ position:absolute; inset:0; width:100%; height:100%; object-fi
   #numeros .numeros-highlight{ order:-1; border-bottom:1px solid rgba(255,255,255,.05); }
   #numeros .numeros-highlight:last-of-type{ border-bottom:none; }
   #numeros .numeros-highlight + :not(.numeros-highlight){ border-top:none !important; }
-  #numeros .numeros-highlight .font-display{ font-size:3.25rem; line-height:1; }
+  #numeros .numeros-highlight .font-display{ font-size:4rem; line-height:1; }
   #numeros .numeros-highlight p{ font-size:0.8125rem; margin-top:0.75rem; }
 }
