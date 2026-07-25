@@ -94,6 +94,53 @@ const counterIO = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 document.querySelectorAll('.counter').forEach(el => counterIO.observe(el));
 
+// --- CNPJ: máscara e validação via API ---
+const cnpjInput = document.getElementById('cnpj-input');
+const cnpjFeedback = document.getElementById('cnpj-feedback');
+if (cnpjInput && cnpjFeedback) {
+  const maskCnpj = (value) => value
+    .replace(/\D/g, '')
+    .slice(0, 14)
+    .replace(/^(\d{2})(\d)/, '$1.$2')
+    .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/\.(\d{3})(\d)/, '.$1/$2')
+    .replace(/(\d{4})(\d)/, '$1-$2');
+
+  const setFeedback = (text, color) => {
+    cnpjFeedback.textContent = text;
+    cnpjFeedback.className = 'mt-1 block text-xs min-h-[14px] ' + color;
+  };
+
+  let debounceTimer;
+  cnpjInput.addEventListener('input', () => {
+    cnpjInput.value = maskCnpj(cnpjInput.value);
+    cnpjInput.classList.remove('border-green-500', 'border-ember-500');
+    setFeedback('', 'text-neutral-500');
+
+    const digits = cnpjInput.value.replace(/\D/g, '');
+    clearTimeout(debounceTimer);
+    if (digits.length !== 14) return;
+
+    debounceTimer = setTimeout(async () => {
+      setFeedback('Validando CNPJ...', 'text-neutral-500');
+      try {
+        const res = await fetch(`https://api.insomnium.com.br/validar_cnpj/${digits}`);
+        const data = await res.json().catch(() => null);
+        const valido = res.ok && !(data && data.valido === false);
+        if (valido) {
+          cnpjInput.classList.add('border-green-500');
+          setFeedback('CNPJ válido', 'text-green-500');
+        } else {
+          cnpjInput.classList.add('border-ember-500');
+          setFeedback('CNPJ inválido', 'text-ember-400');
+        }
+      } catch (err) {
+        setFeedback('Não foi possível validar agora', 'text-neutral-500');
+      }
+    }, 500);
+  });
+}
+
 // --- Flashlight effect ---
 const grid = document.getElementById('flashlight-grid');
 if (grid) grid.addEventListener('mousemove', (e) => {

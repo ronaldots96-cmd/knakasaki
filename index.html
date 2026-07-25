@@ -160,7 +160,7 @@
       <p class="text-xs font-semibold uppercase tracking-widest text-ember-400 mb-4">Nossa história</p>
       <h2 class="font-display text-4xl md:text-6xl text-white tracking-tight mb-8 leading-none"><span class="text-accent">22 anos</span> aprendendo a importar melhor.</h2>
       <div class="space-y-5 text-neutral-400 text-base md:text-lg leading-relaxed">
-        <p>A KNAKASAKI nasceu da coragem de importar. Foi assim que construímos o que hoje é o nosso maior ativo: um relacionamento próximo e consolidado com fornecedores globais, que elimina intermediários e os riscos comuns da importação.</p>
+        <p>A KNAKASAKI nasceu da coragem de importar. Foi assim que construímos o que hoje é o nosso maior ativo: um relacionamento próximo e consolidado com fornecedores chineses, que elimina intermediários e os riscos comuns da importação.</p>
       </div>
       <blockquote class="mt-8 pl-5 border-l-2 border-ember-500 text-white font-display text-lg md:text-xl font-semibold leading-relaxed">
         Somos uma empresa com histórico de adaptação, não de acomodação. Quando o mercado muda, a gente se reinventa.
@@ -176,7 +176,7 @@
           <p class="text-neutral-500 text-sm max-w-xs mx-auto">[ Espaço para imagem/vídeo da operação: galpão, embarque, equipe ]</p>
         </div>
         <div class="absolute bottom-5 left-5 right-5 flex items-center justify-between rounded-xl border border-white/10 bg-black/50 backdrop-blur px-4 py-3">
-          <div><div class="text-white font-display font-bold text-xl">2003 → hoje</div><div class="text-[11px] text-neutral-400">do Paraguai à China, da 1ª à 2ª geração</div></div>
+          <div><div class="text-white font-display font-bold text-xl">2003 → hoje</div><div class="text-[11px] text-neutral-400">Desde a fundação construindo relações comerciais na China</div></div>
           <i class="w-6 h-6 text-ember-400" data-lucide="trending-up"></i>
         </div>
       </div>
@@ -236,7 +236,7 @@
         <div class="step-num"><span class="font-display font-bold text-ember-400 text-lg">02</span></div>
         <div class="step-content">
           <h3 class="text-white font-display font-semibold text-lg mb-2">Curadoria de fornecedores</h3>
-          <p class="text-sm text-neutral-400 leading-relaxed">Acionamos nossa rede consolidada na China e selecionamos o fornecedor certo pela qualidade, pela condição e pela confiabilidade já testada.</p>
+          <p class="text-sm text-neutral-400 leading-relaxed">A Knakasaki tem time próprio na China, operando a partir de galpões logísticos estratégicos. É essa presença local que garante a curadoria do fornecedor certo pela qualidade, pela condição e pela confiabilidade já testada em campo.</p>
         </div>
       </div>
       <div class="step-item animate-on-scroll" style="transition-delay:200ms;">
@@ -306,7 +306,7 @@
         <div class="relative z-10">
           <div class="w-12 h-12 rounded-xl bg-ember-500/15 text-ember-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform"><i class="w-6 h-6" data-lucide="refresh-cw"></i></div>
           <h3 class="text-white font-display font-semibold text-xl mb-2">Portfólio sempre atualizado</h3>
-          <p class="text-neutral-400 leading-relaxed">Curadoria constante conforme as tendências de mercado. Menos risco de catálogo obsoleto, mais oportunidade de venda.</p>
+          <p class="text-neutral-400 leading-relaxed">Nossa equipe está presente todos os anos nas principais feiras internacionais, garimpando novidades direto na fonte. Curadoria constante conforme as tendências de mercado. Menos risco de catálogo obsoleto, mais oportunidade de venda.</p>
         </div>
       </div>
     </div>
@@ -464,7 +464,10 @@
       <form class="animate-on-scroll rounded-2xl border border-white/10 bg-neutral-950/70 backdrop-blur p-6 md:p-8 space-y-4" style="transition-delay:120ms;" onsubmit="return false;">
         <div class="grid sm:grid-cols-2 gap-4">
           <input type="text" placeholder="Nome" class="w-full rounded-lg bg-neutral-900 border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-ember-500 transition-colors"/>
-          <input type="text" placeholder="Empresa" class="w-full rounded-lg bg-neutral-900 border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-ember-500 transition-colors"/>
+          <div>
+            <input type="text" id="cnpj-input" inputmode="numeric" maxlength="18" placeholder="CNPJ" class="w-full rounded-lg bg-neutral-900 border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-ember-500 transition-colors"/>
+            <span id="cnpj-feedback" class="mt-1 block text-xs min-h-[14px] text-neutral-500"></span>
+          </div>
         </div>
         <div class="grid sm:grid-cols-2 gap-4">
           <input type="tel" placeholder="WhatsApp" class="w-full rounded-lg bg-neutral-900 border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-ember-500 transition-colors"/>
