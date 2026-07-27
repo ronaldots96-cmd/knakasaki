@@ -107,7 +107,140 @@ if (sobreVideo && sobreVideoPlay) {
   });
 }
 
-// --- CNPJ: máscara e validação via API ---
+// --- WhatsApp: máscara de exibição + valor normalizado p/ webhook (DDDNUMERO, sem código do país) ---
+const whatsappInput = document.getElementById('whatsapp-input');
+const whatsappNormalized = document.getElementById('whatsapp-normalized');
+const whatsappError = document.getElementById('whatsapp-error');
+const WHATSAPP_ERROR_MSG = 'Informe um WhatsApp válido com DDD, no formato (31) 98765-4321.';
+
+const maskWhatsapp = (digits) => {
+  if (digits.length === 0) return '';
+  if (digits.length <= 2) return `(${digits}`;
+  if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+};
+
+if (whatsappInput && whatsappNormalized) {
+  whatsappInput.addEventListener('input', () => {
+    const digits = whatsappInput.value.replace(/\D/g, '').slice(0, 11);
+    whatsappInput.value = maskWhatsapp(digits);
+    whatsappNormalized.value = digits.length === 11 ? digits : '';
+
+    if (whatsappError && !whatsappError.classList.contains('hidden')) {
+      whatsappInput.classList.remove('border-red-500');
+      whatsappError.classList.add('hidden');
+    }
+  });
+}
+
+// --- Envio do formulário: valida, envia ao webhook e exibe confirmação ---
+const CONTACT_WEBHOOK_URL = 'https://n8n.v4lisboatech.com.br/webhook/613da106-3c12-429e-a53f-a3761fd5a695';
+const contactForm = document.getElementById('contact-form');
+const contactFormFields = document.getElementById('contact-form-fields');
+const contactFormSuccess = document.getElementById('contact-form-success');
+const contactFormError = document.getElementById('contact-form-error');
+const contactSubmitBtn = document.getElementById('contact-submit-btn');
+const contactSubmitLabel = document.getElementById('contact-submit-label');
+
+if (contactForm && whatsappInput && whatsappError) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (contactFormError) contactFormError.classList.add('hidden');
+
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+      return;
+    }
+
+    const digits = whatsappInput.value.replace(/\D/g, '');
+    if (digits.length !== 11) {
+      whatsappInput.classList.add('border-red-500');
+      whatsappError.textContent = WHATSAPP_ERROR_MSG;
+      whatsappError.classList.remove('hidden');
+      whatsappInput.focus();
+      return;
+    }
+    whatsappInput.classList.remove('border-red-500');
+    whatsappError.classList.add('hidden');
+
+    const marketplaces = Array.from(
+      document.querySelectorAll('#marketplace-options input[name="marketplaces"]:checked')
+    ).map((cb) => cb.value);
+
+    const payload = {
+      nome: document.getElementById('name-input').value,
+      cnpj: cnpjInput ? cnpjInput.value : '',
+      whatsapp: whatsappNormalized.value,
+      email: document.getElementById('email-input').value,
+      ja_vende_marketplace: marketplaceSelect.value,
+      marketplaces,
+      mensagem: document.getElementById('message-input').value,
+    };
+
+    if (contactSubmitBtn) contactSubmitBtn.disabled = true;
+    if (contactSubmitLabel) contactSubmitLabel.textContent = 'Enviando...';
+
+    try {
+      await fetch(CONTACT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (contactFormFields) contactFormFields.classList.add('hidden');
+      if (contactFormSuccess) {
+        contactFormSuccess.classList.remove('hidden');
+        contactFormSuccess.classList.add('flex');
+      }
+    } catch (err) {
+      if (contactFormError) {
+        contactFormError.textContent = 'Não foi possível enviar agora. Tente novamente em instantes.';
+        contactFormError.classList.remove('hidden');
+      }
+    } finally {
+      if (contactSubmitBtn) contactSubmitBtn.disabled = false;
+      if (contactSubmitLabel) contactSubmitLabel.textContent = 'Falar com um especialista';
+    }
+  });
+}
+
+// --- Já vende em marketplace? (libera checkboxes ao marcar "Sim") ---
+const marketplaceSelect = document.getElementById('marketplace-select');
+const marketplaceOptions = document.getElementById('marketplace-options');
+if (marketplaceSelect && marketplaceOptions) {
+  marketplaceSelect.addEventListener('change', () => {
+    const showOptions = marketplaceSelect.value === 'sim';
+    marketplaceOptions.classList.toggle('hidden', !showOptions);
+    if (!showOptions) {
+      marketplaceOptions.querySelectorAll('input[type="checkbox"]').forEach((cb) => { cb.checked = false; });
+    }
+  });
+}
+
+// --- CNPJ: máscara e validação local (dígito verificador, módulo 11) ---
+const isValidCNPJ = (value) => {
+  const digits = value.replace(/\D/g, '');
+  if (digits.length !== 14) return false;
+  if (/^(\d)\1{13}$/.test(digits)) return false; // rejeita sequências repetidas (ex: 00000000000000)
+
+  const calcCheckDigit = (base) => {
+    const weights = base.length === 12
+      ? [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+      : [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    const sum = base.split('').reduce((acc, d, i) => acc + Number(d) * weights[i], 0);
+    const remainder = sum % 11;
+    return remainder < 2 ? 0 : 11 - remainder;
+  };
+
+  const base12 = digits.slice(0, 12);
+  const digit1 = calcCheckDigit(base12);
+  const base13 = base12 + String(digit1);
+  const digit2 = calcCheckDigit(base13);
+
+  return digits === base13 + String(digit2);
+};
+
 const cnpjInput = document.getElementById('cnpj-input');
 const cnpjFeedback = document.getElementById('cnpj-feedback');
 if (cnpjInput && cnpjFeedback) {
@@ -121,36 +254,26 @@ if (cnpjInput && cnpjFeedback) {
 
   const setFeedback = (text, color) => {
     cnpjFeedback.textContent = text;
-    cnpjFeedback.className = 'mt-1 block text-xs min-h-[14px] ' + color;
+    cnpjFeedback.className = 'mt-1 text-xs ' + color + (text ? ' block' : ' hidden');
   };
 
-  let debounceTimer;
   cnpjInput.addEventListener('input', () => {
     cnpjInput.value = maskCnpj(cnpjInput.value);
     cnpjInput.classList.remove('border-green-500', 'border-ember-500');
-    setFeedback('', 'text-neutral-500');
 
     const digits = cnpjInput.value.replace(/\D/g, '');
-    clearTimeout(debounceTimer);
-    if (digits.length !== 14) return;
+    if (digits.length < 14) {
+      setFeedback('', 'text-neutral-500');
+      return;
+    }
 
-    debounceTimer = setTimeout(async () => {
-      setFeedback('Validando CNPJ...', 'text-neutral-500');
-      try {
-        const res = await fetch(`https://api.insomnium.com.br/validar_cnpj/${digits}`);
-        const data = await res.json().catch(() => null);
-        const valido = res.ok && !(data && data.valido === false);
-        if (valido) {
-          cnpjInput.classList.add('border-green-500');
-          setFeedback('CNPJ válido', 'text-green-500');
-        } else {
-          cnpjInput.classList.add('border-ember-500');
-          setFeedback('CNPJ inválido', 'text-ember-400');
-        }
-      } catch (err) {
-        setFeedback('Não foi possível validar agora', 'text-neutral-500');
-      }
-    }, 500);
+    if (isValidCNPJ(digits)) {
+      cnpjInput.classList.add('border-green-500');
+      setFeedback('CNPJ válido', 'text-green-500');
+    } else {
+      cnpjInput.classList.add('border-ember-500');
+      setFeedback('CNPJ inválido', 'text-ember-400');
+    }
   });
 }
 
