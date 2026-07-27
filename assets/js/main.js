@@ -94,6 +94,19 @@ const counterIO = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 document.querySelectorAll('.counter').forEach(el => counterIO.observe(el));
 
+// --- Vídeo da seção Sobre (play sob demanda) ---
+const sobreVideo = document.getElementById('sobre-video');
+const sobreVideoPlay = document.getElementById('sobre-video-play');
+const sobreVideoInfo = document.getElementById('sobre-video-info');
+if (sobreVideo && sobreVideoPlay) {
+  sobreVideoPlay.addEventListener('click', () => {
+    sobreVideoPlay.remove();
+    if (sobreVideoInfo) sobreVideoInfo.remove();
+    sobreVideo.controls = true;
+    sobreVideo.play();
+  });
+}
+
 // --- CNPJ: máscara e validação via API ---
 const cnpjInput = document.getElementById('cnpj-input');
 const cnpjFeedback = document.getElementById('cnpj-feedback');

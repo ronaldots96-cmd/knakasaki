@@ -168,16 +168,20 @@
     </div>
 
     <div class="animate-on-scroll" style="transition-delay:150ms;">
-      <div class="relative rounded-2xl overflow-hidden border border-white/10 aspect-[4/5] bg-gradient-to-br from-neutral-800 via-neutral-900 to-black flex items-center justify-center">
-        <div class="absolute inset-0 opacity-30" style="background-image:linear-gradient(115deg,transparent 40%,rgba(189,21,46,.30));"></div>
-        <div class="absolute inset-0" style="background-image:radial-gradient(circle at 30% 20%,rgba(224,50,75,.18),transparent 50%);"></div>
-        <div class="relative text-center px-8">
-          <i class="w-16 h-16 text-neutral-600 mx-auto mb-4" data-lucide="container"></i>
-          <p class="text-neutral-500 text-sm max-w-xs mx-auto">[ Espaço para imagem/vídeo da operação: galpão, embarque, equipe ]</p>
-        </div>
-        <div class="absolute bottom-5 left-5 right-5 flex items-center justify-between rounded-xl border border-white/10 bg-black/50 backdrop-blur px-4 py-3">
-          <div><div class="text-white font-display font-bold text-xl">2003 → hoje</div><div class="text-[11px] text-neutral-400">Desde a fundação construindo relações comerciais na China</div></div>
-          <i class="w-6 h-6 text-ember-400" data-lucide="trending-up"></i>
+      <div class="relative mx-auto w-full max-w-[300px] sm:max-w-[340px] lg:max-w-[380px] rounded-[2rem] border border-white/10 bg-neutral-900 p-2 shadow-2xl shadow-black/50">
+        <div class="relative rounded-[1.5rem] overflow-hidden aspect-[9/16] bg-black">
+          <video id="sobre-video" class="absolute inset-0 w-full h-full object-cover" poster="https://knakasakiloja.com.br/images/img_000.webp" playsinline preload="metadata">
+            <source src="assets/video/video-1.mp4" type="video/mp4"/>
+          </video>
+          <button id="sobre-video-play" type="button" aria-label="Reproduzir vídeo" class="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/50 transition-colors">
+            <span class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/90 flex items-center justify-center text-ember-500 hover:scale-105 transition-transform shadow-xl">
+              <i class="w-6 h-6 md:w-7 md:h-7 ml-1" data-lucide="play"></i>
+            </span>
+          </button>
+          <div id="sobre-video-info" class="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl border border-white/10 bg-black/50 backdrop-blur px-3 py-2.5">
+            <div><div class="text-white font-display font-bold text-lg">2003 → hoje</div><div class="text-[10px] text-neutral-400 leading-snug">Desde a fundação construindo relações comerciais na China</div></div>
+            <i class="w-5 h-5 text-ember-400 shrink-0 ml-2" data-lucide="trending-up"></i>
+          </div>
         </div>
       </div>
     </div>
@@ -438,9 +442,9 @@
       </div>
     </div>
     <div class="animate-on-scroll" style="transition-delay:150ms;">
-      <div class="relative rounded-2xl overflow-hidden border border-white/10 aspect-square bg-gradient-to-br from-neutral-800 to-black flex items-center justify-center">
+      <div class="relative rounded-2xl overflow-hidden border border-white/10 aspect-square">
+        <img src="assets/images/img-2.webp" alt="Operação da KNAKASAKI" class="absolute inset-0 w-full h-full object-cover" loading="lazy"/>
         <div class="absolute inset-0" style="background-image:radial-gradient(circle at 70% 30%,rgba(189,21,46,.22),transparent 55%);"></div>
-        <i class="w-20 h-20 text-neutral-700" data-lucide="warehouse"></i>
       </div>
     </div>
   </div>
