@@ -122,8 +122,7 @@
       </div>
 
       <h1 id="hero-title"
-        class="font-display text-white tracking-tight leading-[0.95] text-6xl sm:text-7xl md:text-8xl mb-8">Sua
-        importação, nossa expertise.</h1>
+        class="font-display text-white tracking-tight leading-[0.95] text-6xl sm:text-7xl md:text-8xl mb-8">Sua importação, nossa expertise.</h1>
 
       <p class="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-10 leading-relaxed animate-on-scroll"
         style="transition-delay:200ms;">
@@ -746,21 +745,24 @@
       </div>
       <div
         class="pt-8 border-t border-neutral-200 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-500">
+        <span>© <span id="year"></span> NAKAN IMPORT COMÉRCIO DE FERRAMENTAS LTDA · Todos os direitos reservados.</span>
         <span class="flex gap-6"><a href="#" class="hover:text-ember-500 transition-colors">Política de
             Privacidade</a><a href="#" class="hover:text-ember-500 transition-colors">Termos</a></span>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=1.1"></script>
   <script>
-    window.addEventListener('load', function () {
+    function dismissPreloader() {
       var preloader = document.getElementById('preloader');
       if (preloader) {
         preloader.style.opacity = '0';
         setTimeout(function () { preloader.remove(); }, 500);
       }
-    });
+    }
+    window.addEventListener('load', dismissPreloader);
+    setTimeout(dismissPreloader, 2500);
   </script>
 </body>
 

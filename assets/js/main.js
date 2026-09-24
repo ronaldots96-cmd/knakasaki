@@ -1,6 +1,11 @@
 // Icons
-lucide.createIcons();
-document.getElementById('year').textContent = new Date().getFullYear();
+if (window.lucide && typeof lucide.createIcons === 'function') {
+  lucide.createIcons();
+}
+const yearEl = document.getElementById('year');
+if (yearEl) {
+  yearEl.textContent = new Date().getFullYear();
+}
 
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (reduce) document.body.classList.add('reduce-motion');
@@ -25,22 +30,28 @@ if (hv) {
 
 // --- Nav background on scroll ---
 const nav = document.getElementById('nav');
-const onScroll = () => {
-  if (window.scrollY > 24) nav.classList.add('shadow-md');
-  else nav.classList.remove('shadow-md');
-};
-onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+if (nav) {
+  const onScroll = () => {
+    if (window.scrollY > 24) nav.classList.add('shadow-md');
+    else nav.classList.remove('shadow-md');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
 
 // --- Mobile menu ---
 const mBtn = document.getElementById('menu-btn');
 const mMenu = document.getElementById('mobile-menu');
-mBtn.addEventListener('click', () => mMenu.classList.toggle('hidden'));
-document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => mMenu.classList.add('hidden')));
+if (mBtn && mMenu) {
+  mBtn.addEventListener('click', () => mMenu.classList.toggle('hidden'));
+  document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => mMenu.classList.add('hidden')));
+}
 
 // --- Hero char reveal ---
 (function(){
   const title = document.getElementById('hero-title');
-  const text = title.textContent.trim();
+  if (!title) return;
+  const text = title.textContent.replace(/\s+/g, ' ').trim();
   const hi = 'expertise';
   const hiStart = text.toLowerCase().indexOf(hi);
   title.innerHTML = '';
